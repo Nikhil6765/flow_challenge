@@ -1,7 +1,5 @@
-import MyContract from "./MyContract.cdc"
+import CarsContract from 0x03
 
-pub fun main(id: UInt64): MyContract.Person? {
-    let account = getAccount(0x01)
-    let myContractRef = account.getContract<MyContract.Contract>(address: 0x01)
-    return myContractRef.getPerson(id: id)
+pub fun main(Model: String): CarsContract.Car {
+    return CarsContract.Cars[Model]!
 }
