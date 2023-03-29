@@ -22,14 +22,14 @@ pub contract CryptoPoops: NonFungibleToken {
     }
   }
 
-  pub resource interface MyCollectionPublic{
+  pub resource interface PublicCollection{
     pub fun deposit(token: @NonFungibleToken.NFT)
     pub fun getIDs(): [UInt64]
     pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT
     pub fun borrowAuthNFT(id: UInt64): &NFT
   }
 
-  pub resource Collection: NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, MyCollectionPublic {
+  pub resource Collection: NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, PublicCollection {
     pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
     pub fun withdraw(withdrawID: UInt64): @NonFungibleToken.NFT {
@@ -54,7 +54,7 @@ pub contract CryptoPoops: NonFungibleToken {
     }
 
     pub fun borrowAuthNFT(id: UInt64): &NFT {
-        let refNFT = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?) ?? panic("prob in contract")
+        let refNFT = (&self.ownedNFTs[id] as auth &NonFungibleToken.NFT?) ?? panic("Problem in the contract")
         return refNFT as! &NFT
     }
 
